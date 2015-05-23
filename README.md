@@ -122,6 +122,14 @@ hybrid(function (err, file) {
 ```
 
 
+## See also
+- [apidocs-cli](https://github.com/tunnckocore/apidocs-cli): Async CLI for automatically generating API docs from code comments
+- [helper-related](https://github.com/helpers/helper-related): Template helper for generating a list of links to the homepages of… [more](https://github.com/helpers/helper-related)
+- [helper-apidocs](https://github.com/jonschlinkert/helper-apidocs): Template helper for automatically generating API docs from code… [more](https://github.com/jonschlinkert/helper-apidocs)
+- [koa-ip-filter](https://github.com/tunnckocore/koa-ip-filter): Filter IPs with a glob pattern, regex, string, array or matcher function.… [more](https://github.com/tunnckocore/koa-ip-filter)
+- [tmp-filepath](https://github.com/tunnckocore/tmp-filepath): Generate temporary filepath string (without writing to disk), using scaleable… [more](https://github.com/tunnckocore/tmp-filepath)
+
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/tmp-file/issues/new).
