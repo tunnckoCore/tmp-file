@@ -23,5 +23,23 @@
     "is-stream": "^1.0.1",
     "os-tmpdir": "^1.0.1"
   },
-  "keywords": []
+  "keywords": [
+    "async",
+    "create",
+    "disk",
+    "file",
+    "hybrid",
+    "hybridify",
+    "promise",
+    "record",
+    "spec",
+    "stream",
+    "sync",
+    "temp",
+    "temp-file",
+    "tempfile",
+    "tmp",
+    "tmpfile",
+    "vinyl"
+  ]
 }
