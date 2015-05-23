@@ -17,7 +17,7 @@ var through2 = require('through2')
 var osTmpdir = require('os-tmpdir')
 var tmpFile = require('./index')
 
-function tryStatSync (fp) {
+function isFileSync (fp) {
   try {
     return gfs.statSync(fp).isFile()
   } catch(err) {
@@ -31,7 +31,7 @@ test('tmp-file:', function () {
     var actual = tmp.path.indexOf(osTmpdir()) !== -1
     var expected = true
 
-    var exist = tryStatSync(tmp.path)
+    var exist = isFileSync(tmp.path)
 
     test.ok(tmp.path, 'should have .path property')
     test.ok(tmp.contents, 'should have .contents property')
@@ -42,7 +42,7 @@ test('tmp-file:', function () {
 
   test('should write file to disk and return .path and .contents (sync)', function (done) {
     var tmp = tmpFile()
-    var actual = tryStatSync(tmp.path)
+    var actual = isFileSync(tmp.path)
     var expected = true
 
     test.ok(tmp.path, 'should have .path property')
@@ -52,20 +52,18 @@ test('tmp-file:', function () {
   })
 
   test('should async write file to disk and have .path and .contents', function (done) {
-    test.equal(typeof tmpFile(function (err, tmp) {
-      if (err) {
-        return done(err)
-      }
-      var isFile = tryStatSync(tmp.path)
+    tmpFile(function (err, tmp) {
+      var isFile = isFileSync(tmp.path)
       var actual = tmp.path.indexOf(osTmpdir()) !== -1
       var expected = true
 
+      test.ifError(err, 'should be null')
       test.ok(tmp.path, 'should have .path property')
       test.ok(tmp.contents, 'should have .contents property')
       test.equal(isFile, true, 'should filepath exists')
       test.equal(actual, expected, 'should have /tmp at returned .path')
       done()
-    }), 'object')
+    })
   })
 
   test('should be (readable) stream when .stream()', function (done) {
@@ -84,7 +82,7 @@ test('tmp-file:', function () {
       var actual = file.path.indexOf(osTmpdir()) !== -1
       var expected = true
 
-      var exist = tryStatSync(file.path)
+      var exist = isFileSync(file.path)
 
       test.ok(file.path, 'should have .path property')
       test.ok(file.contents, 'should have .contents property')
@@ -127,16 +125,12 @@ test('tmp-file:', function () {
     var cnt = 0
 
     hybrid(function (err, file) {
-      if (err) {
-        return done(err)
-      }
-
-      var actual = tryStatSync(file.path)
+      var actual = isFileSync(file.path)
       var expected = true
 
+      test.ifError(err, 'should be null')
       test.equal(actual, expected, 'should file exist on disk')
       cnt++
-      done()
     })
     .then(function () {
       cnt++
@@ -146,18 +140,20 @@ test('tmp-file:', function () {
     .catch(done)
   })
 
-  test('should have .generate() method and not write file to disk', function (done) {
+  test('should have .generate([ext]) method and not write file to disk', function (done) {
     var vinyl = tmpFile.generate()
+    var vinylJsFile = tmpFile.generate('.js')
 
     var actual = vinyl.path.indexOf(osTmpdir()) !== -1
     var expected = true
 
-    var exist = tryStatSync(vinyl.path)
+    var exist = isFileSync(vinyl.path)
 
     test.ok(vinyl.path, 'should have .path property')
     test.ok(vinyl.contents, 'should have .contents property')
     test.equal(actual, expected, 'should have /tmp at returned .path')
     test.equal(exist, false, 'should not write file to disk')
+    test.ok(vinylJsFile.path)
     done()
   })
 })

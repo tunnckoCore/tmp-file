@@ -40,8 +40,8 @@ function tmpFile (callback) {
     return vinyl
   }
 
-  gfs.writeFile(vinyl.path, vinyl.contents, function (err) {
-    err ? callback(err) : callback(null, vinyl)
+  gfs.writeFile(vinyl.path, vinyl.contents, function () {
+    callback(null, vinyl)
   })
   return vinyl
 }
@@ -112,10 +112,8 @@ tmpFile.vinyl = function tmpVinyl () {
  */
 tmpFile.stream = function tmpStream () {
   var vinyl = tmpFile()
-  return gfs.createReadStream(vinyl.path)
-  .pipe(through2.obj(function (buf, enc, next) {
+  return gfs.createReadStream(vinyl.path).pipe(through2.obj(function () {
     this.push(vinyl)
-    next()
   }))
 }
 
