@@ -1,0 +1,26 @@
+{
+  "name": "tmp-file",
+  "version": "0.0.0",
+  "description": "Create actual and temporary file on disk - support stream, sync, gulp, vinyl and async. Returns partially Record/Vinyl File Object",
+  "repository": "tunnckoCore/tmp-file",
+  "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "standard && node test.js"
+  },
+  "dependencies": {
+    "graceful-fs": "^3.0.7",
+    "hybridify": "^1.0.9",
+    "through2": "^0.6.5",
+    "tmp-filepath": "^1.0.0",
+    "vinyl": "^0.4.6"
+  },
+  "devDependencies": {
+    "assertit": "^0.1.0",
+    "is-promise": "^2.0.0",
+    "is-stream": "^1.0.1",
+    "os-tmpdir": "^1.0.1"
+  },
+  "keywords": []
+}
