@@ -15,8 +15,92 @@ npm test
 ## Usage
 > For more use-cases see the [tests](./test.js)
 
+### [tmpFile](./index.js#L35)
+> Creating temporary file and write to disk
+
+- `[callback]` **{Function}** optionally pass callback, otherwise it is sync
+- `returns` **{Object}** with `.path` and `.contents` properties
+
+**Example**
 ```js
 var tmpFile = require('tmp-file')
+
+var file = tmpFile()
+console.log(file)
+//=> { path: '/tmp/cia11kqlt0009tfpvp07inq9f.js',
+//  contents: <Buffer ...> }
+```
+
+### [.generate](./index.js#L66)
+> Generate virtual file object without writing to disk
+
+- `[ext]` **{String}** extension to append to filepath
+- `returns` **{Object}** with `.path` and `.contents` properties
+
+**Example**
+```js
+var tmpFile = require('tmp-file')
+
+var file = tmpFile.generate()
+console.log(file)
+//=> { path: '/tmp/cia11kqlt0009tfpvp07inq9f.js',
+//  contents: <Buffer ...> }
+```
+
+### [.vinyl](./index.js#88)
+> Create Vinyl File object
+
+- `returns` **{Object|Vinyl}** object that is compitable with Vinyl File Format
+
+**Example**
+```js
+var tmpFile = require('tmp-file')
+
+var file = tmpFile.vinyl()
+console.log(file)
+//=> <File "../../../../tmp/cia11zwn00000mjpvom4ioitr.js" <Buffer ... >>
+```
+
+### [.stream](./index.js#L113)
+> Create temp file as stream and write it to disk
+
+- `returns` **{Stream}** through2 stream in object mode, can be used in gulp
+
+**Example**
+```js
+var tmpFile = require('tmp-file')
+var stream = tmpFile.stream()
+
+stream
+.pipe(through2.obj(function (file, enc, next) {
+  console.log(file)
+  //=> { path: '/tmp/cia123v5d0004u7pvfa01sjq9.js',
+  //  contents: <Buffer ...> }
+  next()
+})
+```
+
+### [.promise](./index.js#L146)
+> Create hybrid temp file with hybridify
+
+- `returns` **{Promise}** promise/hybrid
+
+**Example**
+```js
+var tmpFile = require('tmp-file')
+var hybrid = tmpFile.promise()
+
+hybrid(function (err, file) {
+  console.log(file)
+  //=> { path: '/tmp/cia128gmg000721pvndiq2d53.js',
+  //  contents: <Buffer ...> }
+})
+.then(function (file) {
+  console.log(file)
+  //=> { path: '/tmp/cia128gmg000721pvndiq2d53.js',
+  //  contents: <Buffer ...> }
+})
+.catch(console.error)
 ```
 
 
