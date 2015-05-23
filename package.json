@@ -1,6 +1,6 @@
 {
   "name": "tmp-file",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Create actual and temporary file on disk - support stream, sync, gulp, vinyl and async. Returns partially Record/Vinyl File Object",
   "repository": "tunnckoCore/tmp-file",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
