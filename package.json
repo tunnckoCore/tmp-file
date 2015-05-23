@@ -14,7 +14,8 @@
     "hybridify": "^1.0.9",
     "through2": "^0.6.5",
     "tmp-filepath": "^1.0.0",
-    "vinyl": "^0.4.6"
+    "vinyl": "^0.4.6",
+    "vinyl-file": "^1.1.1"
   },
   "devDependencies": {
     "assertit": "^0.1.0",

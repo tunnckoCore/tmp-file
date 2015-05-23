@@ -9,6 +9,7 @@
 
 var gfs = require('graceful-fs')
 var Vinyl = require('vinyl')
+var vinylFile = require('vinyl-file')
 var through2 = require('through2')
 var hybridify = require('hybridify')
 var filepath = require('tmp-filepath')
@@ -114,6 +115,33 @@ tmpFile.stream = function tmpStream () {
   var vinyl = tmpFile()
   return gfs.createReadStream(vinyl.path).pipe(through2.obj(function () {
     this.push(vinyl)
+  }))
+}
+
+/**
+ * > Create temp file as gulp and write it to disk
+ *
+ * **Example**
+ * ```js
+ * var tmpFile = require('tmp-file')
+ * var gulp = tmpFile.gulp()
+ *
+ * gulp
+ * .pipe(through2.obj(function (file, enc, next) {
+ *   console.log(file)
+ *   //=> <File "../../../../tmp/cia1arvm000066rpv0dqfzy7u.js" <Buffer ... >>
+ *   next()
+ * })
+ * ```
+ *
+ * @return {Stream} through2 gulp in object mode, can be used in gulp
+ * @api public
+ */
+tmpFile.gulp = function tmpGulp () {
+  var vinyl = tmpFile()
+  return gfs.createReadStream(vinyl.path).pipe(through2.obj(function () {
+    var file = vinylFile.readSync(vinyl.path)
+    this.push(file)
   }))
 }
 

@@ -66,19 +66,21 @@ test('tmp-file:', function () {
     })
   })
 
-  test('should be (readable) stream when .stream()', function (done) {
+  test('should be (readable) stream when .stream() or .gulp()', function (done) {
     var stream = tmpFile.stream()
+    var gulp = tmpFile.gulp()
 
     test.equal(isStream(stream), true, 'should be stream')
+    test.equal(isStream(gulp), true, 'should be stream')
     test.equal(isStream.readable(stream), true, 'should be readable stream')
     done()
   })
 
-  test('should be readable stream in object mode with file object', function (done) {
+  test('should be readable stream in object mode when .stream()', function (done) {
     var stream = tmpFile.stream()
 
     stream
-    .pipe(through2.obj(function (file, enc, next) {
+    .pipe(through2.obj(function assertPlugin (file, enc, next) {
       var actual = file.path.indexOf(osTmpdir()) !== -1
       var expected = true
 
@@ -88,6 +90,25 @@ test('tmp-file:', function () {
       test.ok(file.contents, 'should have .contents property')
       test.equal(actual, expected, 'should have /tmp at returned .path')
       test.equal(exist, true, 'should file exist on disk')
+      done()
+    }))
+    .on('error', done)
+  })
+
+  test('should be transform stream in object mode for Gulp, using .gulp()', function (done) {
+    var gulp = tmpFile.gulp()
+
+    gulp
+    .pipe(through2.obj(function assertPlugin (file, enc, next) {
+      var exist = isFileSync(file.path)
+
+      test.ok(exist)
+      test.ok(file.cwd === process.cwd())
+      test.ok(file.base === process.cwd())
+      test.ok(file.path)
+      test.ok(typeof file.stat === 'object')
+      test.ok(Buffer.isBuffer(file.contents))
+      test.ok(file.contents.length > 10)
       done()
     }))
     .on('error', done)

@@ -15,7 +15,7 @@ npm test
 ## Usage
 > For more use-cases see the [tests](./test.js)
 
-### [tmpFile](./index.js#L35)
+### [tmpFile](./index.js#L36)
 > Creating temporary file and write to disk
 
 - `[callback]` **{Function}** optionally pass callback, otherwise it is sync
@@ -31,7 +31,7 @@ console.log(file)
 //  contents: <Buffer ...> }
 ```
 
-### [.generate](./index.js#L66)
+### [.generate](./index.js#L67)
 > Generate virtual file object without writing to disk
 
 - `[ext]` **{String}** extension to append to filepath
@@ -47,7 +47,7 @@ console.log(file)
 //  contents: <Buffer ...> }
 ```
 
-### [.vinyl](./index.js#88)
+### [.vinyl](./index.js#89)
 > Create Vinyl File object
 
 - `returns` **{Object|Vinyl}** object that is compitable with Vinyl File Format
@@ -61,7 +61,7 @@ console.log(file)
 //=> <File "../../../../tmp/cia11zwn00000mjpvom4ioitr.js" <Buffer ... >>
 ```
 
-### [.stream](./index.js#L113)
+### [.stream](./index.js#L114)
 > Create temp file as stream and write it to disk
 
 - `returns` **{Stream}** through2 stream in object mode, can be used in gulp
@@ -80,7 +80,25 @@ stream
 })
 ```
 
-### [.promise](./index.js#L146)
+### [.gulp](./index.js#L140)
+> Create temp file as gulp and write it to disk
+
+- `returns` **{Stream}** through2 gulp in object mode, can be used in gulp
+
+**Example**
+```js
+var tmpFile = require('tmp-file')
+var gulp = tmpFile.gulp()
+
+gulp
+.pipe(through2.obj(function (file, enc, next) {
+  console.log(file)
+  //=> <File "../../../../tmp/cia1arvm000066rpv0dqfzy7u.js" <Buffer ... >>
+  next()
+})
+```
+
+### [.promise](./index.js#L172)
 > Create hybrid temp file with hybridify
 
 - `returns` **{Promise}** promise/hybrid
