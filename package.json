@@ -1,6 +1,6 @@
 {
   "name": "tmp-file",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Create actual and temporary file on /tmp folder",
   "repository": "tunnckoCore/tmp-file",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://i.am.charlike.online)",
